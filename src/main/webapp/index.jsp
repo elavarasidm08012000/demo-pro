@@ -1,5 +1,5 @@
 <html>
 <body>
-<h2>checking th poll scm commit</h2>
+<h2>poll scm is working</h2>
 </body>
 </html>
