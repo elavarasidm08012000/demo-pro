@@ -1,0 +1,23 @@
+
+pipeline {
+    agent any
+
+    stages {
+        stage('scm') {
+            steps {
+                git branch: 'war', url: 'https://github.com/awspandian/demo-pro.git'
+            }
+        }
+		stage('Build') {
+            steps {
+               bat 'mvn clean'
+			   bat 'mvn install'
+            }
+        }
+		stage('Deploy') {
+            steps {
+               bat 'Xcopy /y "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\oct-27-pipeline\\target\\my-web.war" "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps"'
+            }
+        }
+    }
+}
