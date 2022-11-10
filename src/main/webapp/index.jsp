@@ -1,5 +1,5 @@
 <html>
 <body>
-<h2> clone in my local machine for testing the code Free style project on Nov-09</h2>
+<h2> build Free style project on Nov-09 using pollscm</h2>
 </body>
 </html>
