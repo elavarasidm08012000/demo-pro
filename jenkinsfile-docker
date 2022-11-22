@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('SCM') {
+            steps {
+               git branch: 'war', url: 'https://github.com/awspandian/demo-pro.git'
+            }
+        }
+     	stage('Build') {
+            steps {
+               sh 'mvn clean'
+	       sh 'mvn install'
+            }
+        }
+		stage("Docker build") {
+			steps {
+				sh "docker build -t dockerpandain/demo:${BUILD_TIMESTAMP} ."
+      }
+    }
+
+		stage("Docker login") {
+			steps {
+				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker',
+                          usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+			sh "docker login --username $USERNAME --password $PASSWORD"
+        }
+      }
+    }
+
+		stage("Docker push") {
+			steps {
+				sh "docker push dockerpandain/demo:${BUILD_TIMESTAMP}"
+      }
+    }
+    }
+}
